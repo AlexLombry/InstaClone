@@ -15,6 +15,8 @@ class TableViewController: UITableViewController {
     let usersRef = Firebase(url: "https://instaclone123.firebaseio.com/users")
     var userRef: Firebase?
     
+    var users = [NSDictionary]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,50 +53,27 @@ class TableViewController: UITableViewController {
         return cell
     }
 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    // TODO: To change quickly
+    func makeUsers(ident: String, email: String, password: String) {
+        ref.createUser(
+            email,
+            password: password,
+            withValueCompletionBlock: { error, result in
+                if error != nil {
+                    // There was an error creating the account
+                    
+                } else {
+                    let uid = result["uid"] as? String
+                    
+                    self.loggedIn = true
+                    self.switchButton(self.loggedIn)
+                    self.errorLbl.text = "Account created"
+                    self.errorLbl.hidden = false
+                    
+                    print("Account created with id : \(uid)")
+                }
+            }
+        )
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
