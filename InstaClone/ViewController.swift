@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var logoutBtn: UIButton!
     @IBOutlet weak var enterBtn: UIButton!
     
+    @IBOutlet weak var errorLbl: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,6 +57,10 @@ class ViewController: UIViewController {
             let ident = dialogAlert.textFields![0];
             let email = dialogAlert.textFields![1];
             let pass = dialogAlert.textFields![2];
+            
+            if (ident.text != "" && email.text != "" && pass.text != "") {
+                self.createUsers(ident.text!, email: email.text!, password: pass.text!)
+            }
             
             // ! because everything is optional
             self.createUsers(ident.text!, email: email.text!, password: pass.text!)
@@ -108,6 +114,8 @@ class ViewController: UIViewController {
                     
                     self.loggedIn = true
                     self.switchButton(self.loggedIn)
+                    self.errorLbl.text = "Account created"
+                    self.errorLbl.hidden = false
                     
                     print("Account created with id : \(uid)")
                 }
@@ -126,12 +134,12 @@ class ViewController: UIViewController {
         ref.authUser(email, password: password, withCompletionBlock: { error, authData in
             if error != nil {
                 // There was an error logging in to this account
-                print("User not found with this credentials")
+                self.errorLbl.text = "User not found"
+                self.errorLbl.hidden = false
             } else {
                 // We are now logged in
                 self.loggedIn = true
                 self.switchButton(self.loggedIn)
-                print("you are connected")
             }
         })
     }
@@ -150,6 +158,9 @@ class ViewController: UIViewController {
      */
     func switchButton(loggedIn: Bool) {
         if loggedIn {
+            self.errorLbl.text = ""
+            self.errorLbl.hidden = true
+            
             self.loginBtn.hidden = true
             self.newAccountBtn.hidden = true
             
@@ -195,9 +206,4 @@ class ViewController: UIViewController {
     @IBAction func enter(sender: AnyObject) {
         self.performSegueWithIdentifier("home", sender: self)
     }
-    
-    
-    
-    
 }
-
