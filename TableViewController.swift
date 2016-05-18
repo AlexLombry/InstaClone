@@ -13,13 +13,12 @@ class TableViewController: UITableViewController {
     // Database reference from Firebase
     let ref = Firebase(url: "https://instaclone123.firebaseio.com")
     let usersRef = Firebase(url: "https://instaclone123.firebaseio.com/users")
-    var userRef: Firebase?
-    
     var users = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        addContact()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -53,6 +52,28 @@ class TableViewController: UITableViewController {
         return cell
     }
 
+    func addContact() {
+        for i in 0 ..< 20 {
+            let name: String = "user\(i)"
+            let u = usersRef.childByAppendingPath(name)
+            let user: NSDictionary = [
+                "name" : name,
+                "email": "\(name)@site.com",
+                "avatar": "avatar\(i).jpg",
+                "suivi": "non"
+            ]
+            
+            u.setValue(user)
+            makeUsers(name, email: "\(name)@site.com", password: "xxxx\(i)")
+            users.append([
+                "name" : name,
+                "email": "\(name)@site.com",
+                "avatar": "avatar\(i).jpg",
+                "suivi": "non"
+            ])
+        }
+    }
+    
     // TODO: To change quickly
     func makeUsers(ident: String, email: String, password: String) {
         ref.createUser(
@@ -60,17 +81,8 @@ class TableViewController: UITableViewController {
             password: password,
             withValueCompletionBlock: { error, result in
                 if error != nil {
-                    // There was an error creating the account
-                    
                 } else {
-                    let uid = result["uid"] as? String
-                    
-                    self.loggedIn = true
-                    self.switchButton(self.loggedIn)
-                    self.errorLbl.text = "Account created"
-                    self.errorLbl.hidden = false
-                    
-                    print("Account created with id : \(uid)")
+                    print("Successfully created user account with uid: \(ident)")
                 }
             }
         )
