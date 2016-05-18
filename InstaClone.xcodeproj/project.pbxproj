@@ -27,7 +27,7 @@
 		FA608C711CEC786C00035673 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA608C741CEC786C00035673 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA608C761CEC786C00035673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA608C7C1CECA8F300035673 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		FA608C7C1CECA8F300035673 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewController.swift; path = ../TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +62,6 @@
 		FA608C5E1CEC786C00035673 = {
 			isa = PBXGroup;
 			children = (
-				FA608C7C1CECA8F300035673 /* TableViewController.swift */,
 				FA608C691CEC786C00035673 /* InstaClone */,
 				FA608C681CEC786C00035673 /* Products */,
 				171859C376DAC6825F3D08C4 /* Pods */,
@@ -83,6 +82,7 @@
 			children = (
 				FA608CB21CECB08400035673 /* avatars */,
 				FA608C6A1CEC786C00035673 /* AppDelegate.swift */,
+				FA608C7C1CECA8F300035673 /* TableViewController.swift */,
 				FA608C6C1CEC786C00035673 /* ViewController.swift */,
 				FA608C6E1CEC786C00035673 /* Main.storyboard */,
 				FA608C711CEC786C00035673 /* Assets.xcassets */,

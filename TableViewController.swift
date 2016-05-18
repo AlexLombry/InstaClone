@@ -19,6 +19,7 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         // get all account from Firebase
+        print("passage")
         queryFirebase()
     }
 
@@ -53,6 +54,7 @@ class TableViewController: UITableViewController {
     }
 
     func queryFirebase() {
+        
         // Attach a closure to read the data at our posts reference
         usersRef.observeEventType(.Value, withBlock: { snapshot in
             var tmp = [NSDictionary]()
@@ -61,6 +63,7 @@ class TableViewController: UITableViewController {
                 let item = user as! FDataSnapshot
                 let dictionary = item.value as! NSDictionary
                 tmp.append(dictionary)
+                print(dictionary);
             }
             
             // assign globally all users from Firebase
@@ -72,7 +75,7 @@ class TableViewController: UITableViewController {
         })
     }
     
-    func addContact() {
+    /*func addContact() {
         for i in 1 ..< 21 {
             let name: String = "user\(i)"
             let u = usersRef.childByAppendingPath(name)
@@ -92,7 +95,7 @@ class TableViewController: UITableViewController {
                 "suivi": "non"
             ])
         }
-    }
+    }*/
     
     // TODO: To change quickly
     func makeUsers(ident: String, email: String, password: String) {
