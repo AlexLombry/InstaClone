@@ -7,9 +7,16 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
 
+    // Database reference from Firebase
+    let ref = Firebase(url: "https://instaclone123.firebaseio.com")
+    
+    
+    // MARK: - IBOutlet
+    // Outlet for textfield
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passField: UITextField!
     
@@ -23,6 +30,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: - Basic function
     func alertDialog() {
         
         let dialogAlert = UIAlertController(title: "Create new account", message: "", preferredStyle: .Alert)
@@ -33,7 +41,8 @@ class ViewController: UIViewController {
             let email = dialogAlert.textFields![1];
             let pass = dialogAlert.textFields![2];
             
-            print("compte créer pour \(ident.text) \(email.text) \(pass.text)")
+            // ! because everything is optional
+            self.createUsers(ident.text!, email: email.text!, password: pass.text!)
         }
         
         // cancel action
@@ -61,11 +70,57 @@ class ViewController: UIViewController {
         presentViewController(dialogAlert, animated: true, completion: nil)
     }
     
-    @IBAction func connection(sender: AnyObject) {
+    /**
+     Create a user on Firebase database
+     
+     - parameter ident: User name
+     
+     - parameter email: User email address
+     
+     - parameter password: User password
+     */
+    func createUsers(ident: String, email: String, password: String) {
+        
+        ref.createUser(
+            email,
+            password: password,
+            withValueCompletionBlock: { error, result in
+                if error != nil {
+                    // There was an error creating the account
+                    
+                } else {
+                    let uid = result["uid"] as? String
+                    print("Account created with id : \(uid)")
+                }
+            }
+        )
         
     }
     
-    /// Pragma mark: Create an Account
+    /**
+       Enable user to log in into our app via Firebase
+     
+     - parameter email: User email address
+     
+     - parameter password: User password
+     */
+    func login(email: String, password: String) {
+        ref.authUser(email, password: password, withCompletionBlock: { error, authData in
+            if error != nil {
+                // There was an error logging in to this account
+                print("User not found with this credentials")
+            } else {
+                // We are now logged in
+                print("you are connected")
+            }
+        })
+    }
+    
+    // MARK: - IBAction
+    @IBAction func connection(sender: AnyObject) {
+        login(emailField.text!, password: passField.text!)
+    }
+    
     @IBAction func createAccount(sender: AnyObject) {
         alertDialog()
     }
