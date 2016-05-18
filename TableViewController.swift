@@ -68,7 +68,7 @@ class TableViewController: UITableViewController {
             users.append([
                 "name" : name,
                 "email": "\(name)@site.com",
-                "avatar": "avatar\(i).jpg",
+                "avatar": "avatar\(i).jpeg",
                 "suivi": "non"
             ])
         }
