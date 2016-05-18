@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     // Database reference from Firebase
     let ref = Firebase(url: "https://instaclone123.firebaseio.com")
-    
+    var loggedIn: Bool = false
     
     // MARK: - IBOutlet TextField
     // Outlet for textfield
@@ -29,15 +29,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // check if user is logged in and work from it
-        let isLoggedIn: Bool = self.isLoggedIn()
-        
-        if isLoggedIn == true {
-            self.setBtnLoggedIn()
-        } else {
-            self.setBtnLoggedOut()
-            print("Not logged In")
-        }
+        /// Check if user is connected or not
+        ref.observeAuthEventWithBlock({ authData in
+            if authData != nil {
+                self.loggedIn = true
+            } else {
+                self.loggedIn = false
+            }
+            self.switchButton(self.loggedIn)
+        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,7 +96,6 @@ class ViewController: UIViewController {
      - parameter password: User password
      */
     func createUsers(ident: String, email: String, password: String) {
-        
         ref.createUser(
             email,
             password: password,
@@ -106,11 +105,14 @@ class ViewController: UIViewController {
                     
                 } else {
                     let uid = result["uid"] as? String
+                    
+                    self.loggedIn = true
+                    self.switchButton(self.loggedIn)
+                    
                     print("Account created with id : \(uid)")
                 }
             }
         )
-        
     }
     
     /**
@@ -127,6 +129,8 @@ class ViewController: UIViewController {
                 print("User not found with this credentials")
             } else {
                 // We are now logged in
+                self.loggedIn = true
+                self.switchButton(self.loggedIn)
                 print("you are connected")
             }
         })
@@ -136,58 +140,42 @@ class ViewController: UIViewController {
      Logout the user
      */
     func logout() {
+        self.loggedIn = false
+        self.switchButton(self.loggedIn)
         ref.unauth()
-        
-        self.setBtnLoggedOut()
     }
     
-    /**
-     Check if user is currently logged in
+    /*
+     Switch button between auth status
      */
-    func isLoggedIn() -> Bool {
-        var bools = false
-        /// Check if user is connected or not
-        ref.observeAuthEventWithBlock({ authData in
-            if authData != nil {
-                self.setBtnLoggedIn()
-                bools = true
-            } else {
-                self.setBtnLoggedOut()
-               bools = false
-            }
-        })
-        
-        return bools
-    }
-    
-    func setBtnLoggedIn() {
-        self.loginBtn.hidden = true
-        self.newAccountBtn.hidden = true
-        
-        // disabled it
-        self.loginBtn.enabled = false
-        self.newAccountBtn.enabled = false
-        
-        self.logoutBtn.hidden = false
-        self.enterBtn.hidden = false
-        
-        self.logoutBtn.enabled = true
-        self.enterBtn.enabled = true
-    }
-    
-    func setBtnLoggedOut() {
-        self.loginBtn.hidden = false
-        self.newAccountBtn.hidden = false
-        
-        // disabled it
-        self.loginBtn.enabled = true
-        self.newAccountBtn.enabled = true
-        
-        self.logoutBtn.hidden = true
-        self.enterBtn.hidden = true
-        
-        self.logoutBtn.enabled = false
-        self.enterBtn.enabled = false
+    func switchButton(loggedIn: Bool) {
+        if loggedIn {
+            self.loginBtn.hidden = true
+            self.newAccountBtn.hidden = true
+            
+            // disabled it
+            self.loginBtn.enabled = false
+            self.newAccountBtn.enabled = false
+            
+            self.logoutBtn.hidden = false
+            self.enterBtn.hidden = false
+            
+            self.logoutBtn.enabled = true
+            self.enterBtn.enabled = true
+        } else {
+            self.loginBtn.hidden = false
+            self.newAccountBtn.hidden = false
+            
+            // disabled it
+            self.loginBtn.enabled = true
+            self.newAccountBtn.enabled = true
+            
+            self.logoutBtn.hidden = true
+            self.enterBtn.hidden = true
+            
+            self.logoutBtn.enabled = false
+            self.enterBtn.enabled = false
+        }
     }
     
     // MARK: - IBAction
