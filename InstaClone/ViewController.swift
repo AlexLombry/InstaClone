@@ -50,6 +50,7 @@ class ViewController: UIViewController {
             
         }
         
+        // MARK: Output configuration
         dialogAlert.addTextFieldWithConfigurationHandler { (textIdent) -> Void in
             textIdent.placeholder = "Identity"
         }
