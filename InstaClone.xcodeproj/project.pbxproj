@@ -81,6 +81,7 @@
 		FA608C691CEC786C00035673 /* InstaClone */ = {
 			isa = PBXGroup;
 			children = (
+				FA608CB21CECB08400035673 /* avatars */,
 				FA608C6A1CEC786C00035673 /* AppDelegate.swift */,
 				FA608C6C1CEC786C00035673 /* ViewController.swift */,
 				FA608C6E1CEC786C00035673 /* Main.storyboard */,
@@ -89,6 +90,13 @@
 				FA608C761CEC786C00035673 /* Info.plist */,
 			);
 			path = InstaClone;
+			sourceTree = "<group>";
+		};
+		FA608CB21CECB08400035673 /* avatars */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = avatars;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

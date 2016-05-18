@@ -17,13 +17,9 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        addContact()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        // get all account from Firebase
+        queryFirebase()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,20 +36,44 @@ class TableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 10
+        return users.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
 
-        cell.textLabel?.text = "BanKai"
+        let ident = users[indexPath.row]["name"] as! String
+        let avatar = users[indexPath.row]["avatar"] as! String
+        
+        cell.textLabel?.text = ident
+        cell.imageView!.image = UIImage(named: avatar)
 
         return cell
     }
 
+    func queryFirebase() {
+        // Attach a closure to read the data at our posts reference
+        usersRef.observeEventType(.Value, withBlock: { snapshot in
+            var tmp = [NSDictionary]()
+            
+            for user in snapshot.children {
+                let item = user as! FDataSnapshot
+                let dictionary = item.value as! NSDictionary
+                tmp.append(dictionary)
+            }
+            
+            // assign globally all users from Firebase
+            self.users = tmp
+            self.tableView.reloadData()
+            
+            }, withCancelBlock: { error in
+                print(error.description)
+        })
+    }
+    
     func addContact() {
-        for i in 0 ..< 20 {
+        for i in 1 ..< 21 {
             let name: String = "user\(i)"
             let u = usersRef.childByAppendingPath(name)
             let user: NSDictionary = [
