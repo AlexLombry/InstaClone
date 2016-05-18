@@ -1,14 +1,4 @@
-**=&gt; Guide Installation **[**Cocoapods**](https://guides.cocoapods.org/using/getting-started.html)
-
-- exécuter cette commande dans votre terminal : 
-
- sudo gem install cocoapods
-
-  
-
-en lire [plus](https://guides.cocoapods.org/using/getting-started.html)
-
-= &gt; Installer** CocoaPods** = &gt; ([lien](https://guides.cocoapods.org/using/getting-started.html))
+**Guide Installation **[**Cocoapods**](https://guides.cocoapods.org/using/getting-started.html)
 
 $ sudo gem install cocoapods
 
@@ -20,7 +10,6 @@ Créer un fichier **Podfile : **
 4. ouvrir le fichier **_podfile_** dans un code editeur (Sublime Text)
 5. Ajouter code suivant:
 
- 
 
 platform :ios, "9.0"
 
@@ -29,9 +18,11 @@ use_frameworks!
 target 'Instagram' do
 
   pod 'Firebase'
+  
 
 end
 
+
 6. sauvegarder fichier
 
-7. dans terminal, taper commande : **_pod install_**, pour installer les 
+7. dans terminal, taper commande : **_pod install_**, pour installer les dépendances.
