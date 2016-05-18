@@ -15,16 +15,31 @@ class ViewController: UIViewController {
     let ref = Firebase(url: "https://instaclone123.firebaseio.com")
     
     
-    // MARK: - IBOutlet
+    // MARK: - IBOutlet TextField
     // Outlet for textfield
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passField: UITextField!
     
+    // MARK: - IBOutlet Button
+    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var newAccountBtn: UIButton!
+    @IBOutlet weak var logoutBtn: UIButton!
+    @IBOutlet weak var enterBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // check if user is logged in and work from it
+        let isLoggedIn: Bool = self.isLoggedIn()
+        
+        if isLoggedIn == true {
+            self.setBtnLoggedIn()
+        } else {
+            self.setBtnLoggedOut()
+            print("Not logged In")
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -70,7 +85,7 @@ class ViewController: UIViewController {
         
         presentViewController(dialogAlert, animated: true, completion: nil)
     }
-    
+
     /**
      Create a user on Firebase database
      
@@ -117,6 +132,64 @@ class ViewController: UIViewController {
         })
     }
     
+    /*
+     Logout the user
+     */
+    func logout() {
+        ref.unauth()
+        
+        self.setBtnLoggedOut()
+    }
+    
+    /**
+     Check if user is currently logged in
+     */
+    func isLoggedIn() -> Bool {
+        var bools = false
+        /// Check if user is connected or not
+        ref.observeAuthEventWithBlock({ authData in
+            if authData != nil {
+                self.setBtnLoggedIn()
+                bools = true
+            } else {
+                self.setBtnLoggedOut()
+               bools = false
+            }
+        })
+        
+        return bools
+    }
+    
+    func setBtnLoggedIn() {
+        self.loginBtn.hidden = true
+        self.newAccountBtn.hidden = true
+        
+        // disabled it
+        self.loginBtn.enabled = false
+        self.newAccountBtn.enabled = false
+        
+        self.logoutBtn.hidden = false
+        self.enterBtn.hidden = false
+        
+        self.logoutBtn.enabled = true
+        self.enterBtn.enabled = true
+    }
+    
+    func setBtnLoggedOut() {
+        self.loginBtn.hidden = false
+        self.newAccountBtn.hidden = false
+        
+        // disabled it
+        self.loginBtn.enabled = true
+        self.newAccountBtn.enabled = true
+        
+        self.logoutBtn.hidden = true
+        self.enterBtn.hidden = true
+        
+        self.logoutBtn.enabled = false
+        self.enterBtn.enabled = false
+    }
+    
     // MARK: - IBAction
     @IBAction func connection(sender: AnyObject) {
         login(emailField.text!, password: passField.text!)
@@ -126,5 +199,17 @@ class ViewController: UIViewController {
         alertDialog()
     }
 
+    @IBAction func logout(sender: AnyObject) {
+        logout()
+    }
+    
+    /// User can enter only if he use this action
+    @IBAction func enter(sender: AnyObject) {
+        self.performSegueWithIdentifier("home", sender: self)
+    }
+    
+    
+    
+    
 }
 
