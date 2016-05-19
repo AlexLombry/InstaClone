@@ -13,10 +13,28 @@ class TableViewController: UITableViewController {
     // Database reference from Firebase
     let ref = Firebase(url: "https://instaclone123.firebaseio.com")
     let usersRef = Firebase(url: "https://instaclone123.firebaseio.com/users")
+    let followsRef = Firebase(url: "https://instaclone123.firebaseio.com/follows")
+    
+
     var users = [NSDictionary]()
+    var follows = [NSDictionary]()
+    var array = [NSDictionary]()
+    
+    
+    @IBOutlet weak var ctrlOrder: UISegmentedControl!
+
+    @IBAction func ctrlSegmentUpdate(sender: AnyObject) {
+        refreshData()
+    }
+    
+    func refreshData() {
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ctrlOrder.addTarget(self, action: #selector(TableViewController.refreshData), forControlEvents: .TouchUpInside)
         
         // get all account from Firebase
         queryFirebase()
@@ -35,7 +53,15 @@ class TableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return users.count
+        //return users.count
+        
+        if ctrlOrder.selectedSegmentIndex == 0 {
+            array = users
+        } else {
+            array = follows
+        }
+        
+        return array.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
