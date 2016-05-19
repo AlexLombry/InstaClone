@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -137,13 +138,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="rGe-Md-ubH">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" id="rGe-Md-ubH">
                                 <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rGe-Md-ubH" id="6uR-QC-LbM">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="rch-RK-5CM" kind="push" identifier="showPics" id="JLq-2o-u1S"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -156,6 +160,77 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WAQ-TL-STQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="619" y="385"/>
+        </scene>
+        <!--Contact View Controller-->
+        <scene sceneID="f2i-bw-j5m">
+            <objects>
+                <viewController id="rch-RK-5CM" customClass="ContactViewController" customModule="InstaClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="No3-0F-agv"/>
+                        <viewControllerLayoutGuide type="bottom" id="g1Y-Ef-NqE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7bb-MY-EnM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cPl-AO-6Xk">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jEr-eY-eGA">
+                                    <size key="itemSize" width="130" height="130"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellContact" id="Ey4-1Z-mqN" customClass="CollectionViewCell" customModule="InstaClone" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="64" width="130" height="130"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wU4-QI-YxD">
+                                                    <rect key="frame" x="8" y="8" width="114" height="114"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottomMargin" secondItem="wU4-QI-YxD" secondAttribute="bottom" id="Km7-2X-JAU"/>
+                                            <constraint firstItem="wU4-QI-YxD" firstAttribute="leading" secondItem="Ey4-1Z-mqN" secondAttribute="leadingMargin" id="SVv-oe-2tD"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="wU4-QI-YxD" secondAttribute="trailing" id="YFO-mg-ItG"/>
+                                            <constraint firstAttribute="topMargin" secondItem="wU4-QI-YxD" secondAttribute="top" id="yLV-rQ-qRa"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="wU4-QI-YxD" id="qlZ-Fu-Qyx"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cPl-AO-6Xk" firstAttribute="top" secondItem="No3-0F-agv" secondAttribute="bottom" id="Awk-kD-K1U"/>
+                            <constraint firstItem="cPl-AO-6Xk" firstAttribute="leading" secondItem="7bb-MY-EnM" secondAttribute="leading" id="C58-Lp-QdD"/>
+                            <constraint firstAttribute="trailing" secondItem="cPl-AO-6Xk" secondAttribute="trailing" id="Ugl-dz-SD2"/>
+                            <constraint firstItem="g1Y-Ef-NqE" firstAttribute="top" secondItem="cPl-AO-6Xk" secondAttribute="bottom" id="rqE-rD-BbT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Xcy-gR-tnC">
+                        <barButtonItem key="rightBarButtonItem" title="Follow" id="hDV-MR-YLQ">
+                            <connections>
+                                <action selector="followContact:" destination="rch-RK-5CM" id="Lgt-Fu-Byc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="cPl-AO-6Xk" id="kQN-HA-wCX"/>
+                        <outlet property="follow" destination="hDV-MR-YLQ" id="Bld-pZ-H0f"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tie-xt-BHz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1045" y="384"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rhc-DX-iT3">

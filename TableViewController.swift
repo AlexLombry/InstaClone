@@ -19,7 +19,6 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         // get all account from Firebase
-        print("passage")
         queryFirebase()
     }
 
@@ -29,7 +28,6 @@ class TableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -40,7 +38,6 @@ class TableViewController: UITableViewController {
         return users.count
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
 
@@ -63,7 +60,6 @@ class TableViewController: UITableViewController {
                 let item = user as! FDataSnapshot
                 let dictionary = item.value as! NSDictionary
                 tmp.append(dictionary)
-                print(dictionary);
             }
             
             // assign globally all users from Firebase
@@ -110,5 +106,26 @@ class TableViewController: UITableViewController {
             }
         )
     }
+    
+    // send information to segue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let index = tableView.indexPathForSelectedRow
+        let contactSelected = users[(index!.row)]
+        
+        let contactVC = segue.destinationViewController as! ContactViewController
+        contactVC.contact = contactSelected
+        
+    }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

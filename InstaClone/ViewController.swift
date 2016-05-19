@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         
         presentViewController(dialogAlert, animated: true, completion: nil)
     }
-
+    
     /**
      Create a user on Firebase database
      
